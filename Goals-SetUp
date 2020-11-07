@@ -1,0 +1,46 @@
+#I want to sum both home and away goals for each team that participated in the premier league between 2013-2019
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+S1 = pd.read_excel("/Users/declan_meaney/Desktop/Data/PL_2013-2019/Premier_2013-2014.xlsx")
+S2 = pd.read_excel("/Users/declan_meaney/Desktop/Data/PL_2013-2019/Premier_2014-2015.xlsx")
+S3 = pd.read_excel("/Users/declan_meaney/Desktop/Data/PL_2013-2019/Premier_2015-2016.xlsx")
+S4 = pd.read_excel("/Users/declan_meaney/Desktop/Data/PL_2013-2019/Premier_2016-2017.xlsx")
+S5 = pd.read_excel("/Users/declan_meaney/Desktop/Data/PL_2013-2019/Premier_2017-2018.xlsx")
+S6 = pd.read_excel("/Users/declan_meaney/Desktop/Data/PL_2013-2019/Premier_2018-2019.xlsx")
+
+a = S1.groupby(['Home_Team']).Home_GoalsFT.sum().reset_index(name = 'Home_Goals')
+b = S2.groupby(['Home_Team']).Home_GoalsFT.sum().reset_index(name = 'Home_Goals')
+c = S3.groupby(['Home_Team']).Home_GoalsFT.sum().reset_index(name = 'Home_Goals')
+d = S4.groupby(['Home_Team']).Home_GoalsFT.sum().reset_index(name = 'Home_Goals')
+e = S5.groupby(['Home_Team']).Home_GoalsFT.sum().reset_index(name = 'Home_Goals')
+f = S6.groupby(['Home_Team']).Home_GoalsFT.sum().reset_index(name = 'Home_Goals')
+
+g = S1.groupby(['Away_Team']).Away_GoalsFT.sum().reset_index(name = 'Away_Goals')
+h = S2.groupby(['Away_Team']).Away_GoalsFT.sum().reset_index(name = 'Away_Goals')
+i = S3.groupby(['Away_Team']).Away_GoalsFT.sum().reset_index(name = 'Away_Goals')
+j = S4.groupby(['Away_Team']).Away_GoalsFT.sum().reset_index(name = 'Away_Goals')
+k = S5.groupby(['Away_Team']).Away_GoalsFT.sum().reset_index(name = 'Away_Goals')
+l = S6.groupby(['Away_Team']).Away_GoalsFT.sum().reset_index(name = 'Away_Goals')
+
+
+#Combine data for home and away goals, respectively across the six seasons for which there is data
+
+HomeFrames = [a, b, c, d, e, f]
+HomeFrame = pd.concat(HomeFrames)
+
+AwayFrames = [g, h, i, j, k, l]
+AwayFrame = pd.concat(AwayFrames)
+
+
+#Combine data from two data frames, one for home goals and one for away, into the same data frame
+TeamFrame = HomeFrame.rename(columns={'Home_Team':'Team', 'Home_Goals':'Home_Goals'})
+
+TeamFrame['Away_Goals'] = AwayFrame.Away_Goals
+
+
+#Get total goals
+TeamFrame["Total"] = TeamFrame.Home_Goals + TeamFrame.Away_Goals
