@@ -1,0 +1,35 @@
+#Get total goals
+Total_Home = TeamFrame.Home_Goals.sum()
+Total_Away = TeamFrame.Away_Goals.sum()
+
+#Get Home & Away goals as percent of total
+Total_HomePct = Total_Home/TeamFrame.Total.sum()
+Total_AwayPct = Total_Away/TeamFrame.Total.sum()
+
+
+#Find SE for Home Goals & Away Goals
+nHome = Total_Home
+pHome = Total_HomePct
+
+SE_Home = np.sqrt((pHome * (1 - pHome))/nHome)
+
+nAway = Total_Away
+pAway = Total_AwayPct
+
+SE_Away = np.sqrt((pAway * (1 - pAway))/nAway)
+
+
+tstar = 1.96
+
+
+#Calculate SE for difference of two population proportions
+SE_Diff = np.sqrt(SE_Home**2 + SE_Away**2)
+
+#Calculate pct difference between total goals score at home vs away
+DifferencePct = pHome - pAway
+
+#Calculate Lower Bound & Upper Bound CIs
+lb = DifferencePct - tstar * SE_Diff
+ub = DifferencePct + tstar * SE_Diff
+
+(lb, ub)
