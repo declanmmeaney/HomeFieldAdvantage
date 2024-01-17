@@ -1,4 +1,4 @@
-#Get total goals
+st#Get total goals
 Total_Home = TeamFrame.Home_Goals.sum()
 Total_Away = TeamFrame.Away_Goals.sum()
 
@@ -33,3 +33,6 @@ lb = DifferencePct - tstar * SE_Diff
 ub = DifferencePct + tstar * SE_Diff
 
 (lb, ub)
+
+
+#test
